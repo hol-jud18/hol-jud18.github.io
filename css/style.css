@@ -1,0 +1,230 @@
+/* Claude Dark Mode Colors */
+:root {
+    --bg-color: #0f0f0f;
+    --main-bg: #1a1a1a;
+    --text-color: #e0e0e0;
+    --highlight: #ff8c00;
+    --link-color: #3498db;
+    --border-color: #333;
+    --box-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
+    --code-bg: #2a2a2a;
+}
+
+/* Global Styles */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Courier New', monospace;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    border-top: 2px solid var(--highlight);
+}
+
+/* Container */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.ascii-logo {
+    white-space: pre;
+    font-size: 0.8em;
+    color: var(--highlight);
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin: 0.5em 0;
+    color: var(--highlight);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+nav {
+    margin: 20px 0;
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+    border: 1px solid var(--border-color);
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+nav a:hover {
+    background-color: var(--highlight);
+    color: var(--bg-color);
+    box-shadow: var(--box-shadow);
+}
+
+/* Main Content */
+main {
+    background-color: var(--main-bg);
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    margin: 20px 0;
+    box-shadow: var(--box-shadow);
+}
+
+.post {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.post:last-child {
+    border-bottom: none;
+}
+
+.post-title {
+    color: var(--highlight);
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+
+.post-meta {
+    color: #888;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+}
+
+.post-content {
+    margin-bottom: 20px;
+}
+
+.post-tags {
+    margin-top: 15px;
+}
+
+.tag {
+    background-color: var(--border-color);
+    color: var(--text-color);
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin-right: 5px;
+    font-size: 0.8em;
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: var(--main-bg);
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    margin: 20px 0;
+    box-shadow: var(--box-shadow);
+}
+
+.sidebar h3 {
+    color: var(--highlight);
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 10px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.sidebar li {
+    margin-bottom: 10px;
+}
+
+/* Links */
+a {
+    color: var(--link-color);
+    text-decoration: underline;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--highlight);
+}
+
+/* Code Blocks */
+pre {
+    background-color: var(--code-bg);
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+    border-left: 3px solid var(--highlight);
+    margin: 20px 0;
+}
+
+code {
+    font-family: 'Courier New', monospace;
+    color: #e0e0e0;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    border-top: 1px dashed var(--border-color);
+    margin-top: 30px;
+    font-size: 0.9em;
+}
+
+.hit-counter {
+    margin-top: 10px;
+    font-family: 'Digital', monospace;
+    background-color: var(--code-bg);
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+/* Retro Elements */
+.blink {
+    animation: blink-animation 1s steps(5, start) infinite;
+}
+
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+
+.divider {
+    text-align: center;
+    margin: 20px 0;
+    color: var(--highlight);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+    
+    header {
+        padding: 10px;
+    }
+    
+    .ascii-logo {
+        font-size: 0.6em;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+    
+    nav a {
+        display: block;
+        margin: 10px 0;
+    }
+}
