@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jude Holz - Cybersecurity Research</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="ascii-logo">              
+      .------..------..------..------..------.     .------..------..------..------..------.
+      |L.--. ||E.--. ||A.--. ||R.--. ||N.--. |.-.  |C.--. ||Y.--. ||B.--. ||E.--. ||R.--. |
+      | :/\: || (\/) || (\/) || :(): || :(): ((5)) | :/\: || (\/) || :(): || (\/) || :(): |
+      | (__) || :\/: || :\/: || ()() || ()() |'-.-.| :\/: || :\/: || ()() || :\/: || ()() |
+      | '--'L|| '--'E|| '--'A|| '--'R|| '--'N| ((1)) '--'C|| '--'Y|| '--'B|| '--'E|| '--'R|
+          `------'`------'`------'`------'`------'  '-'`------'`------'`------'`------'`------'              
+            </div>
+            <h1>Jude Holz</h1>
+            <p>Exploring Topics In Cyber Security And IT</p>
+            <nav>
+                <a href="../../../index.html">HOME</a>
+                <a href="html/posts.html">POSTS</a>
+                <a href="html/projects.html">PROJECTS</a>
+                <a href="html/tools.html">TOOLS</a>
+                <a href="html/about.html">ABOUT</a>
+            </nav>
+        </header>
+
+        <main>
+            <article class="post">
+                <h2 class="post-title">Solving OverTheWire Bandit Levels 1-5</h2>
+                <div class="post-meta">Posted on March 24, 2025</div>
+                <div class="post-content">
+                    <p>Today I'm walking through the first five levels of OverTheWire's Bandit wargame. These challenges provide an excellent foundation for learning Linux command line basics and essential security concepts.</p>
+                    
+                    <div class="divider">== [ THE JOURNEY BEGINS ] ==</div>
+                    
+                    <h3>Bandit 0 → 1</h3>
+                    <p>Our first challenge introduces basic file reading. After logging in to the server, we need to find and read a file in the home directory.</p>
+                    
+                    <pre><code>
+bandit0@bandit:~$ ls
+readme
+bandit0@bandit:~$ cat readme
+ZjLjTmM6FvvyRnrb2rfNWOZOTa6ip5If
+                    </code></pre>
+                    
+                    <p>The key insight here is using <code>ls</code> to list directory contents and <code>cat</code> to display file contents. These are fundamental commands you'll use constantly in your Linux journey.</p>
+                    
+                    <div class="divider">~*~*~*~*~*~*~*~*~*~*~*~*~*~</div>
+                    
+                    <h3>Bandit 1 → 2</h3>
+                    <p>This level introduces a tricky filename - a dash (-) character. In Linux, dashes have special meaning for commands, so we need special techniques to read such files.</p>
+                    
+                    <pre><code>
+bandit1@bandit:~$ ls
+-
+bandit1@bandit:~$ cat ./-
+263JGJPfgU6LtdEvgfWU1XP5yac29mFx
+                    </code></pre>
+                    
+                    <p>There are two main approaches to read files with dash names:</p>
+                    <ul>
+                        <li>Using the path prefix: <code>cat ./-</code></li>
+                        <li>Using input redirection: <code>cat < -</code></li>
+                    </ul>
+                    
+                    <p>This challenge teaches us about how shell interprets command line arguments and handling special characters.</p>
+                    
+                    <div class="divider">~*~*~*~*~*~*~*~*~*~*~*~*~*~</div>
+                    
+                    <h3>Bandit 2 → 3 - Spaces in Filename</h3>
+                    <p>Now we encounter another filename challenge - spaces in filenames. Spaces typically separate command arguments, so we need special handling.</p>
+                    
+                    <pre><code>
+bandit2@bandit:~$ ls
+spaces in this filename
+bandit2@bandit:~$ cat "spaces in this filename"
+MNk8KNH3Usiio41PRUEoDFPqfxLPlSmx
+                    </code></pre>
+                    
+                    <p>When dealing with filenames containing spaces, we have several options:</p>
+                    <ul>
+                        <li>Enclosing the filename in quotes: <code>cat "spaces in this filename"</code></li>
+                        <li>Escaping each space with a backslash: <code>cat spaces\ in\ this\ filename</code></li>
+                    </ul>
+                    
+                    <div class="divider">~*~*~*~*~*~*~*~*~*~*~*~*~*~</div>
+                    
+                    <h3>Bandit 3 → 4 - Hidden Files</h3>
+                    <p>This level introduces the concept of hidden files in Linux - files whose names begin with a dot (.) character.</p>
+                    
+                    <pre><code>
+bandit3@bandit:~$ ls
+inhere
+bandit3@bandit:~$ cd inhere
+bandit3@bandit:~/inhere$ ls
+bandit3@bandit:~/inhere$ ls -a
+.  ..  .hidden
+bandit3@bandit:~/inhere$ cat .hidden
+2WmrDFRmJIq3IPxneAaMGhap0pFhF3NJ
+                    </code></pre>
+                    
+                    <p>The key command here is <code>ls -a</code> which reveals all files, including hidden ones. Alternatively, <code>ls -al</code> or the alias <code>ll</code> provides more detailed information in a long listing format.</p>
+                    
+                    <div class="divider">~*~*~*~*~*~*~*~*~*~*~*~*~*~</div>
+                    
+                    <h3>Bandit 4 → 5 - Finding Human-Readable Files</h3>
+                    <p>In this challenge, we need to determine which file contains ASCII text among many binary data files.</p>
+                    
+                    <pre><code>
+bandit4@bandit:~$ cd inhere
+bandit4@bandit:~/inhere$ ls
+-file00  -file01  -file02  -file03  -file04  -file05  -file06  -file07  -file08  -file09
+bandit4@bandit:~/inhere$ file ./*
+./-file00: data
+./-file01: data
+./-file02: data
+./-file03: data
+./-file04: data
+./-file05: data
+./-file06: data
+./-file07: ASCII text
+./-file08: data
+./-file09: data
+bandit4@bandit:~/inhere$ cat ./-file07
+4oQYVPkxZOOEOO5pTW81FB8j8lxXGUQw
+                    </code></pre>
+                    
+                    <p>This level introduces the powerful <code>file</code> command, which determines file types regardless of extension. Combined with the wildcard character <code>*</code>, we can efficiently examine multiple files at once.</p>
+                    
+                    <p>A few important takeaways:</p>
+                    <ul>
+                        <li>The <code>file</code> command helps identify file types</li>
+                        <li>The wildcard <code>*</code> lets you apply commands to multiple files</li>
+                        <li>Using <code>./*</code> ensures dash-prefixed filenames are handled correctly</li>
+                    </ul>
+                    
+                    <div class="divider">== [ CONCLUSION ] ==</div>
+                    
+                    <p>These initial Bandit levels establish fundamental Linux skills that are essential for cybersecurity work. From basic file operations to handling special filenames and discovering hidden content, each challenge builds your command line proficiency in a practical way.</p>
+                    
+                    <p>In future posts, I'll explore more advanced Bandit levels that introduce concepts like file permissions, network tools, and process management. Stay tuned!</p>
+                    
+                    <div class="divider">~*~*~*~*~*~*~*~*~*~*~*~*~*~</div>
+                </div>
+                <div class="post-tags">
+                    <span class="tag">overthewire</span>
+                    <span class="tag">bandit</span>
+                    <span class="tag">linux</span>
+                    <span class="tag">command-line</span>
+                    <span class="tag">wargames</span>
+                </div>
+            </article>
+        </main>
+
+        <aside class="sidebar">
+            <h3>About Me</h3>
+            <p>I am a university student studying computer science and mathematics. I am interested in exploring the cyber security landscape and building fundamental skills</p>
+            
+            <h3>Latest Projects</h3>
+            <ul>
+                <li><a href="#">PacketPhantom - Traffic Analysis Tool</a></li>
+                <li><a href="#">WebVulnScanner - Custom Web Vulnerability Scanner</a></li>
+                <li><a href="#">CryptoBreaker - Cryptography Learning Platform</a></li>
+            </ul>
+            
+            <h3>Useful Links</h3>
+            <ul>
+                <li>GitHub: <a href="https://github.com/hol-jud18" target="_blank">My GitHub</a></li>
+                <li>Email: <a href="judeholz@icloud.com">judeholz@icloud.com</a></li>
+            </ul>
+        </aside>
+
+        <footer>
+            <p class="blink">-- I'm Having Fun, Are You? --</p>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
