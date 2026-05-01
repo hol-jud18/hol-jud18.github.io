@@ -11,10 +11,10 @@
   --accent2:    #7eb8d4;
   --accent3:    #cc4444;
   --text:       #d4d4d4;
-  --text-dim:   #888888;
-  --text-muted: #555555;
+  --text-dim:   #aaaaaa;
+  --text-muted: #808080;
   --font-mono:  'Roboto Mono', 'Courier New', monospace;
-  --font-sans:  'Inter', system-ui, sans-serif;
+  --font-sans:  'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 html { scroll-behavior: smooth; }
