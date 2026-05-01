@@ -1,0 +1,17 @@
+<header class="site-header">
+  <div class="site-wrapper">
+    <div class="header-inner">
+      <a href="{{ '/' | relative_url }}" class="site-logo">
+        <span class="logo-bracket">[</span>
+        <span class="logo-name">{{ site.author.handle }}</span>
+        <span class="logo-bracket">]</span>
+        <span class="logo-cursor"></span>
+      </a>
+      <nav class="site-nav">
+        <a href="{{ '/' | relative_url }}"    class="nav-link {% if page.url == '/' %}active{% endif %}">home</a>
+        <a href="{{ '/blog/' | relative_url }}" class="nav-link {% if page.url contains '/blog' %}active{% endif %}">blog</a>
+        <a href="{{ '/about/' | relative_url }}" class="nav-link {% if page.url contains '/about' %}active{% endif %}">about</a>
+      </nav>
+    </div>
+  </div>
+</header>
