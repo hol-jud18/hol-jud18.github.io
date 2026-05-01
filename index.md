@@ -3,13 +3,10 @@ layout: home
 title: "hol-jud18"
 ---
 <div class="hero">
-  <p class="hero-prompt">whoami</p>
   <h1 class="hero-title">Jude Holz</h1>
   <p class="hero-sub">malware dev &nbsp;·&nbsp; security research &nbsp;·&nbsp; low-level systems</p>
   <p class="hero-bio">
-    Northeastern CS student building toward offensive security. This site is where I document my research — 
-    malware development, Windows internals, evasion techniques, and whatever I'm currently breaking apart 
-    to understand. No polish, just process.
+    [write something here]
   </p>
   <div class="hero-links">
     <a href="/blog/" class="hero-link">blog</a>

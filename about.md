@@ -4,7 +4,6 @@ title: "About"
 permalink: /about/
 ---
 <div class="about-header">
-  <div class="about-avatar">&#128025;</div>
   <div class="about-intro">
     <h1>Jude Holz</h1>
     <p class="about-handle">hol-jud18</p>
@@ -14,12 +13,7 @@ permalink: /about/
 
 ## the short version
 
-I'm a computer science student at Northeastern with a focus on offensive security and malware development. 
-I got into security through a fascination with how things break — once I understood that understanding 
-attack is the most rigorous way to understand defense, I never looked back.
-
-This blog is my research notebook made public. I write about what I'm currently building or reversing, 
-the technical decisions behind it, and what I learned. The goal is portfolio + accountability.
+[write something here]
 
 ## what i work on
 
@@ -30,10 +24,7 @@ the technical decisions behind it, and what I learned. The goal is portfolio + a
 
 ## background
 
-I got into CS with no specific direction, found systems programming, and eventually found security. 
-The malware dev angle came from wanting to understand real attack techniques at a code level, not just 
-conceptually. Most of what I know is self-taught from papers, other researchers' blogs, and a lot of 
-trial and error.
+[write something here]
 
 <div class="stat-grid">
   <div class="stat-card">
