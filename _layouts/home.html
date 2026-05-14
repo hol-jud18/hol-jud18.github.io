@@ -1,12 +1,21 @@
 ---
 layout: default
 ---
-{{ content }}
-<ul class="posts">
-  {% for post in site.posts %}
-  <li>
-    <span class="date">{{ post.date | date: "%Y-%m-%d" }}</span>
-    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-  </li>
-  {% endfor %}
-</ul>
+<section class="intro">
+  {{ content }}
+</section>
+
+<section class="latest">
+  <h2>latest posts</h2>
+  <ul class="posts">
+    {% for post in site.posts limit: 5 %}
+    <li>
+      <span class="date">{{ post.date | date: "%Y-%m-%d" }}</span>
+      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% if site.posts.size > 5 %}
+  <a class="see-all" href="{{ '/blog/' | relative_url }}">all posts →</a>
+  {% endif %}
+</section>
