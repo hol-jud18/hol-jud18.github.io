@@ -3,22 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% if page.title %}{{ page.title }} // {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
-  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
-
+  <title>{% if page.title %}{{ page.title }} — {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
-
-  {% seo %}
 </head>
 <body>
-  {% include header.html %}
-
-  <main class="site-main">
-    <div class="site-wrapper">
-      {{ content }}
-    </div>
+  <header>
+    <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
+    <nav>
+      <a href="{{ '/' | relative_url }}">posts</a>
+      <a href="{{ '/about' | relative_url }}">about</a>
+    </nav>
+  </header>
+  <main>
+    {{ content }}
   </main>
-
-  {% include footer.html %}
 </body>
 </html>

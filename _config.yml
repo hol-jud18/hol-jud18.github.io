@@ -1,28 +1,19 @@
-title: "hol-jud18"
-tagline: "malware dev // security research // low-level systems"
-description: "research notes, writeups, and technical deep-dives into malware development and offensive security"
-author:
-  name: "Jude Holz"
-  handle: "hol-jud18"
-  bio: "Northeastern CS student. Malware dev research. I break things to understand them."
-  github: "hol-jud18"
-  email: "holz.ju@northeastern.edu"
-
+title: hol-jud18
+description: malware dev // security research // low-level systems
 url: "https://hol-jud18.github.io"
 baseurl: ""
 
-# Build
 markdown: kramdown
 highlighter: rouge
-permalink: /blog/:year/:month/:day/:title/
+permalink: /:year/:month/:day/:title/
 
 kramdown:
   input: GFM
   syntax_highlighter: rouge
-  syntax_highlighter_opts:
-    css_class: "highlight"
 
-# Collections
+plugins:
+  - jekyll-feed
+
 defaults:
   - scope:
       path: ""
@@ -30,12 +21,7 @@ defaults:
     values:
       layout: "post"
 
-plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
-
 exclude:
-  - README.md
   - Gemfile
   - Gemfile.lock
-  - node_modules
+  - README.md
