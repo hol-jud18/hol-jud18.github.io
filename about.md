@@ -6,7 +6,7 @@ permalink: /about/
 
 # about
 
-Northeastern CS student. I research malware development, offensive security, and low-level systems.
+Northeastern CS and math student. I want to use this site to document my journey learning malware development, reverse engineering, low-level systems.
 
 ## what i work on
 

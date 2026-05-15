@@ -4,6 +4,6 @@ layout: home
 
 # jude holz
 
-malware dev // security research // low-level systems
+malware dev // security research // reverse engineering
 
-Northeastern CS student documenting research into malware development, offensive security, and Windows internals. Mostly C, C++, and assembly.
+Northeastern CS and math student documenting research into malware development, reverse engineering, and Windows internals.

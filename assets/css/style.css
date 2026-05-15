@@ -40,6 +40,14 @@ header.site {
 header.site .brand {
   font-weight: bold;
   color: inherit;
+  display: inline-flex;
+  align-items: center;
+}
+
+header.site .brand img {
+  height: 2.5rem;
+  width: auto;
+  display: block;
 }
 
 header.site nav {
