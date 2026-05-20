@@ -21,26 +21,34 @@ Going back to `PROCESSENTRY32`, there are 3 fields that matter for this techniqu
 + `th32ProcessID` : this is the PID of the currently running process
 + `szExeFile` : this is the process name as a string
 
-```
+```C
+// given a target process name, returns a PID and an open handle to it
 BOOL GetRemoteProcessHandle(IN LPWSTR szProcessName, OUT DWORD* dwProcessId, OUT HANDLE* hProcess) {
 
+    // initialize the struct with the necessary step of setting dwSize
     PROCESSENTRY32 pe = { .dwSize = sizeof(PROCESSENTRY32) };
 
+    // takes a snapshot of all currently running processes
     HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     if (hSnapshot == INVALID_HANDLE_VALUE) {
         printf("[!] CreateToolhelp32Snapshot failed: %d\n", GetLastError());
         return FALSE;
     }
 
+    // retrieves the first process from the snapshot
     if (!Process32First(hSnapshot, &pe)) {
         printf("[!] Process32First failed: %d\n", GetLastError());
         CloseHandle(hSnapshot);
         return FALSE;
     }
 
+    // use a do-while loop to iterate through the snapshot looking for the target process
     do {
+        // compare name we are on to name we are looking for
         if (wcscmp(pe.szExeFile, szProcessName) == 0) {
+            // store the PID
             *dwProcessId = pe.th32ProcessID;
+            // open a handle to the process with full access
             *hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pe.th32ProcessID);
             if (*hProcess == NULL) {
                 printf("[!] OpenProcess failed: %d\n", GetLastError());
@@ -49,8 +57,10 @@ BOOL GetRemoteProcessHandle(IN LPWSTR szProcessName, OUT DWORD* dwProcessId, OUT
         }
     } while (Process32Next(hSnapshot, &pe));
 
+    // done with the snapshot so we close the handle to it
     CloseHandle(hSnapshot);
 
+    // if we couldn't find the process or couldn't open a handle to it, fail
     if (*dwProcessId == 0 || *hProcess == NULL)
         return FALSE;
 
