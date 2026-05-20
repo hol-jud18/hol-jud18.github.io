@@ -10,9 +10,9 @@ Northeastern CS and math student. I want to use this site to document my journey
 
 ## what i work on
 
-- malware development — PE loaders, shellcode, process injection, EDR evasion
-- Windows internals — NTAPI, undocumented structures
-- reverse engineering — static/dynamic analysis
+- malware development
+- Windows internals
+- reverse engineering
 - C / C++ / asm
 
 ## contact
