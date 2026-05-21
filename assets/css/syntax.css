@@ -2,6 +2,7 @@
 .highlight table pre { margin: 0; }
 .highlight, .highlight .w { color: #24292f; background-color: #f4f4f4; }
 .highlight .k, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt, .highlight .kv { color: #cf222e; }
+.highlight .n, .highlight .nx { color: #0550ae; }
 .highlight .gr { color: #f6f8fa; }
 .highlight .gd { color: #82071e; background-color: #ffebe9; }
 .highlight .nb { color: #953800; }

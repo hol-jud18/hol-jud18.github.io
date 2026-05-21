@@ -23,7 +23,7 @@ Going back to `PROCESSENTRY32`, there are 3 fields that matter for this techniqu
 + `th32ProcessID` : this is the PID of the currently running process
 + `szExeFile` : this is the process name as a string
 
-```C
+```c
 // given a target process name, returns a PID and an open handle to it
 BOOL GetRemoteProcessHandle(IN LPWSTR szProcessName, OUT DWORD* dwProcessId, OUT HANDLE* hProcess) {
 
