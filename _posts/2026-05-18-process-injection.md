@@ -12,7 +12,7 @@ The first thing to accomplish is to find all processes running on the machine wh
 
 ## Process Enumeration and Finding a Target Process
 
-Windows provides a very useful structure in tlhelp32.h called `PROCESSENTRY32`{:.language-c} which is parsed by the tlhelp32.h functions `CreateToolhelp32Snapshot Process32First Process32Next`{:.language-c}.
+Windows provides a very useful structure in tlhelp32.h called `PROCESSENTRY32`{:.language-c} which is parsed by the tlhelp32.h functions `CreateToolhelp32Snapshot`{:.language-c} `Process32First`{:.language-c} `Process32Next`{:.language-c}.
 
 You can learn more about the structure from Microsoft here: [Microsoft Documentation](https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/ns-tlhelp32-processentry32)
 
@@ -91,7 +91,7 @@ We need to use `VirtualAllocEx`{:.language-c} to allocate a buffer inside the re
 
 ### Creating the Remote Thread
 
-Finally, `CreateRemoteThread`{:.language-c} spawns a new thread in the target process. We pass it the address of `LoadLibraryW`{:.language-c} as the thread start routine and our allocated DLL path buffer as the argument.
+Finally, `CreateRemoteThread`{:.language-c} spawns a new thread in the target process. We pass it the address of `LoadLibraryW`{:.language-c} as the thread start routine and our allocated DLL path buffer as the argument. 
 
 ```c
 BOOL InjectDllToRemoteProcess(IN HANDLE hProcess, IN LPWSTR szDllPath) {
@@ -115,8 +115,7 @@ BOOL InjectDllToRemoteProcess(IN HANDLE hProcess, IN LPWSTR szDllPath) {
     }
     printf("[+] Wrote %zu bytes to remote process\n", sNumberOfBytesWritten);
 
-    // get the address of LoadLibraryW - valid in the remote process because kernel32.dll
-    // is mapped at the same base address across all processes
+    // get the address of LoadLibraryW which is valid in the remote process because kernel32.dll is mapped at the same base address across all processes
     LPVOID pLoadLibraryW = GetProcAddress(GetModuleHandle(L"kernel32.dll"), "LoadLibraryW");
     if (pLoadLibraryW == NULL) {
         printf("[!] GetProcAddress failed: %d\n", GetLastError());
@@ -171,3 +170,6 @@ int wmain(int argc, wchar_t* argv[]) {
     return 0;
 }
 ```
+
+## Seeing the DLL Injection in Action
+
