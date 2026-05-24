@@ -12,7 +12,7 @@ The first thing to accomplish is to find all processes running on the machine wh
 
 ## Process Enumeration and Finding a Target Process
 
-Windows provides a very userful structure in tlhelp32.h called `PROCESSENTRY32` which is parsed by the tlhelp32.h functions `CreateToolhelp32Snapshot Process32First Process32Next`.
+Windows provides a very useful structure in tlhelp32.h called `PROCESSENTRY32` which is parsed by the tlhelp32.h functions `CreateToolhelp32Snapshot Process32First Process32Next`.
 
 You can learn more about the structure from Microsoft here: [Microsoft Documentation](https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/ns-tlhelp32-processentry32)
 
@@ -23,7 +23,7 @@ Going back to `PROCESSENTRY32`, there are 3 fields that matter for this techniqu
 + `th32ProcessID` : this is the PID of the currently running process
 + `szExeFile` : this is the process name as a string
 
-```C
+```c
 // given a target process name, returns a PID and an open handle to it
 BOOL GetRemoteProcessHandle(IN LPWSTR szProcessName, OUT DWORD* dwProcessId, OUT HANDLE* hProcess) {
 
@@ -91,5 +91,5 @@ We need to use `VirtualAllocEx` to allocate a buffer inside the remote process, 
 
 ### Creating the Remote Thread
 
-Finally, `CreateRemoteThread` spawns a new thread in the target process. We pass it the address of `LoadLibraryW` as the thread start routine and our allocated DLL path buffer as the argument. From the target process's perspective, it is simply calling `LoadLibraryW("C:\\path\\to\\our.dll")`, which loads and executes our DLL's `DllMain`.
+Finally, `CreateRemoteThread` spawns a new thread in the target process. We pass it the address of `LoadLibraryW` as the thread start routine and our allocated DLL path buffer as the argument.
 
