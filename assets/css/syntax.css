@@ -35,3 +35,39 @@
 .highlight .si { color: #24292f; }
 .highlight .ge { color: #24292f; font-style: italic; }
 .highlight .gs { color: #24292f; font-weight: bold; }
+
+/* Prism inline highlighting — tokens for `code`{:.language-x} spans.
+   Colors mirror the Rouge GitHub-light palette above. */
+code[class*="language-"] .token.comment,
+code[class*="language-"] .token.prolog,
+code[class*="language-"] .token.doctype,
+code[class*="language-"] .token.cdata { color: #6e7781; }
+code[class*="language-"] .token.punctuation { color: #24292f; }
+code[class*="language-"] .token.property,
+code[class*="language-"] .token.tag,
+code[class*="language-"] .token.constant,
+code[class*="language-"] .token.symbol,
+code[class*="language-"] .token.deleted { color: #cf222e; }
+code[class*="language-"] .token.boolean,
+code[class*="language-"] .token.number { color: #0550ae; }
+code[class*="language-"] .token.selector,
+code[class*="language-"] .token.attr-name,
+code[class*="language-"] .token.string,
+code[class*="language-"] .token.char,
+code[class*="language-"] .token.inserted { color: #0a3069; }
+code[class*="language-"] .token.operator,
+code[class*="language-"] .token.entity,
+code[class*="language-"] .token.url,
+code[class*="language-"] .token.variable { color: #0550ae; }
+code[class*="language-"] .token.atrule,
+code[class*="language-"] .token.attr-value,
+code[class*="language-"] .token.keyword { color: #cf222e; }
+code[class*="language-"] .token.function,
+code[class*="language-"] .token.class-name { color: #8250df; }
+code[class*="language-"] .token.builtin,
+code[class*="language-"] .token.macro { color: #953800; }
+code[class*="language-"] .token.regex,
+code[class*="language-"] .token.important { color: #116329; }
+code[class*="language-"] .token.important,
+code[class*="language-"] .token.bold { font-weight: bold; }
+code[class*="language-"] .token.italic { font-style: italic; }

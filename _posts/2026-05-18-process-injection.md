@@ -12,16 +12,16 @@ The first thing to accomplish is to find all processes running on the machine wh
 
 ## Process Enumeration and Finding a Target Process
 
-Windows provides a very useful structure in tlhelp32.h called `PROCESSENTRY32` which is parsed by the tlhelp32.h functions `CreateToolhelp32Snapshot Process32First Process32Next`.
+Windows provides a very useful structure in tlhelp32.h called `PROCESSENTRY32`{:.language-c} which is parsed by the tlhelp32.h functions `CreateToolhelp32Snapshot`{:.language-c}, `Process32First`{:.language-c}, and `Process32Next`{:.language-c}.
 
 You can learn more about the structure from Microsoft here: [Microsoft Documentation](https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/ns-tlhelp32-processentry32)
 
 A quick aside on that structure if you look into it, you will find that there are a fair amount of dead fields that have been around since like Win2k. I am not 100% sure why that is, but maintaining backwards compatability is the best I can come up with. I may look more into this in the future. 
 
-Going back to `PROCESSENTRY32`, there are 3 fields that matter for this technique:
-+ `dwSize` : this is going to be set to `sizeof(PROCESSENTRY32)` which tells WinAPI what version of the structure the code is expecting
-+ `th32ProcessID` : this is the PID of the currently running process
-+ `szExeFile` : this is the process name as a string
+Going back to `PROCESSENTRY32`{:.language-c}, there are 3 fields that matter for this technique:
++ `dwSize`{:.language-c} : this is going to be set to `sizeof(PROCESSENTRY32)`{:.language-c} which tells WinAPI what version of the structure the code is expecting
++ `th32ProcessID`{:.language-c} : this is the PID of the currently running process
++ `szExeFile`{:.language-c} : this is the process name as a string
 
 ```c
 // given a target process name, returns a PID and an open handle to it
@@ -76,20 +76,20 @@ We now have what we need from the target process (we have a process handle), we 
 
 1. Allocate memory in the target process to hold the path of the DLL we want to inject
 2. Write the DLL path into that allocated memory
-3. Get the address of `LoadLibraryW` from `kernel32.dll`
-4. Create a remote thread in the target process that calls `LoadLibraryW` with our DLL path as the argument
+3. Get the address of `LoadLibraryW`{:.language-c} from `kernel32.dll`{:.language-c}
+4. Create a remote thread in the target process that calls `LoadLibraryW`{:.language-c} with our DLL path as the argument
 
-The reason this works is that `kernel32.dll` is loaded at the same base address across all processes on a given boot, so the address of `LoadLibraryW` in our process is the same address in the target process.
+The reason this works is that `kernel32.dll`{:.language-c} is loaded at the same base address across all processes on a given boot, so the address of `LoadLibraryW`{:.language-c} in our process is the same address in the target process.
 
 ### Allocating and Writing Memory
 
-We need to use `VirtualAllocEx` to allocate a buffer inside the remote process, and then `WriteProcessMemory` to write the full path of our DLL into that buffer. The allocation needs `PAGE_READWRITE` permissions since `LoadLibraryW` just needs to read the string.
+We need to use `VirtualAllocEx`{:.language-c} to allocate a buffer inside the remote process, and then `WriteProcessMemory`{:.language-c} to write the full path of our DLL into that buffer. The allocation needs `PAGE_READWRITE`{:.language-c} permissions since `LoadLibraryW`{:.language-c} just needs to read the string.
 
 ### Getting the Address of LoadLibraryW
 
-`GetModuleHandle` gives us the base address of `kernel32.dll` in our own process, and `GetProcAddress` resolves `LoadLibraryW` from that base. As mentioned above, because `kernel32.dll` is mapped at the same address in every process, this address is valid in the target process as well.
+`GetModuleHandle`{:.language-c} gives us the base address of `kernel32.dll`{:.language-c} in our own process, and `GetProcAddress`{:.language-c} resolves `LoadLibraryW`{:.language-c} from that base. As mentioned above, because `kernel32.dll`{:.language-c} is mapped at the same address in every process, this address is valid in the target process as well.
 
 ### Creating the Remote Thread
 
-Finally, `CreateRemoteThread` spawns a new thread in the target process. We pass it the address of `LoadLibraryW` as the thread start routine and our allocated DLL path buffer as the argument.
+Finally, `CreateRemoteThread`{:.language-c} spawns a new thread in the target process. We pass it the address of `LoadLibraryW`{:.language-c} as the thread start routine and our allocated DLL path buffer as the argument.
 
