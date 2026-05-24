@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Process Injection via DLL Injection"
+title: "Injecting a DLL Into a Remote Process"
 date: 2026-05-18
 tags: [Process Injection]
 description: "Exploring a process injection technique where we will enumerate running processes and inject a DLL into that process"
@@ -23,7 +23,7 @@ Going back to `PROCESSENTRY32`, there are 3 fields that matter for this techniqu
 + `th32ProcessID` : this is the PID of the currently running process
 + `szExeFile` : this is the process name as a string
 
-```c
+```C
 // given a target process name, returns a PID and an open handle to it
 BOOL GetRemoteProcessHandle(IN LPWSTR szProcessName, OUT DWORD* dwProcessId, OUT HANDLE* hProcess) {
 
@@ -69,4 +69,27 @@ BOOL GetRemoteProcessHandle(IN LPWSTR szProcessName, OUT DWORD* dwProcessId, OUT
     return TRUE;
 }
 ```
+
+## DLL Injection
+
+We now have what we need from the target process (we have a process handle), we then inject the DLL into the target process. The technique works like this:
+
+1. Allocate memory in the target process to hold the path of the DLL we want to inject
+2. Write the DLL path into that allocated memory
+3. Get the address of `LoadLibraryW` from `kernel32.dll`
+4. Create a remote thread in the target process that calls `LoadLibraryW` with our DLL path as the argument
+
+The reason this works is that `kernel32.dll` is loaded at the same base address across all processes on a given boot, so the address of `LoadLibraryW` in our process is the same address in the target process.
+
+### Allocating and Writing Memory
+
+We need to use `VirtualAllocEx` to allocate a buffer inside the remote process, and then `WriteProcessMemory` to write the full path of our DLL into that buffer. The allocation needs `PAGE_READWRITE` permissions since `LoadLibraryW` just needs to read the string.
+
+### Getting the Address of LoadLibraryW
+
+`GetModuleHandle` gives us the base address of `kernel32.dll` in our own process, and `GetProcAddress` resolves `LoadLibraryW` from that base. As mentioned above, because `kernel32.dll` is mapped at the same address in every process, this address is valid in the target process as well.
+
+### Creating the Remote Thread
+
+Finally, `CreateRemoteThread` spawns a new thread in the target process. We pass it the address of `LoadLibraryW` as the thread start routine and our allocated DLL path buffer as the argument. From the target process's perspective, it is simply calling `LoadLibraryW("C:\\path\\to\\our.dll")`, which loads and executes our DLL's `DllMain`.
 
