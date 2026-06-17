@@ -172,5 +172,5 @@ int wmain(int argc, wchar_t* argv[]) {
 ```
 
 ## Seeing the DLL Injection in Action
-<img src="/assets/images/dllinjection_diagram.png" alt="Dll Injection Diagram" style="width: 100%; max-width: 100%;">
+![Dll Injection Diagram](/assets/images/dllinjection_diagram.png)
 
