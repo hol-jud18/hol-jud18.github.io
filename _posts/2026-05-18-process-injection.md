@@ -172,4 +172,5 @@ int wmain(int argc, wchar_t* argv[]) {
 ```
 
 ## Seeing the DLL Injection in Action
+![Dll Injection Diagram](../assets/images/dllinjection_diagram.png)
 
