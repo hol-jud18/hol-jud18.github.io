@@ -5,6 +5,7 @@
   --accent: #00c;
   --accent-hover: #c00;
   --border: #e5e5e5;
+  --table-border: #000;
   --code-bg: #f4f4f4;
 }
 
@@ -167,10 +168,11 @@ table {
   margin: 1.5rem 0;
   font-size: 0.85em;
   line-height: 1.5;
+  border: 2px solid var(--table-border);
 }
 
 th, td {
-  border: 1px solid var(--border);
+  border: 1px solid var(--table-border);
   padding: 0.5rem 0.65rem;
   text-align: left;
   vertical-align: top;
@@ -181,6 +183,7 @@ th {
   background: var(--code-bg);
   font-weight: bold;
   white-space: nowrap;
+  border-bottom: 2px solid var(--table-border);
 }
 
 /* numeric column reads better centered under its heading */
