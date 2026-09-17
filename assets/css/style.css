@@ -161,6 +161,39 @@ blockquote {
   margin: 1rem 0;
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.85em;
+  line-height: 1.5;
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.65rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  text-align: center;
+  background: var(--code-bg);
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+/* numeric column reads better centered under its heading */
+td:nth-child(2) {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+tbody tr:nth-child(even) { background: #fafafa; }
+
+td code { background: none; padding: 0; }
+
 @media (max-width: 480px) {
   header.site {
     flex-direction: column;
@@ -170,6 +203,11 @@ blockquote {
   ul.posts li {
     flex-direction: column;
     gap: 0.1rem;
+  }
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: normal;
   }
 }
 

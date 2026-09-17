@@ -21,7 +21,7 @@ $p(x)$ tells us how likely an event is to happen while $\log_2p(x)$ tells us how
 High entropy means bytes are varied and unpredictable, while low entropy tells us that bytes repeat or follow some patterns.
 
 | Data Type | Entropy | Why |
-|---|---:|---|
+|---|---|---|
 | `00 00 00 00 00...` (nulls) | 0 | Only one unique byte, fully predictable |
 | `01 02 03 04 05...` (sequential) | ~7.62 | 256 unique bytes, uniform distribution |
 | `ff ff ff ff ff...` (fills) | 0 | Repetitive |
@@ -29,3 +29,6 @@ High entropy means bytes are varied and unpredictable, while low entropy tells u
 | English text | ~4.7 | Biased toward common letters (e, t, a, etc.) |
 | Base64-encoded data | ~6.0 | 64 possible characters, more uniform than text |
 | IPv4 strings | ~3–5 | Dependent on actual IP distribution |
+
+## Does Shellcode Have Distinct Entropy
+
