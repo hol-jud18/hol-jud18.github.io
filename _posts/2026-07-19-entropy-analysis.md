@@ -15,3 +15,5 @@ Entropy analysis is fantastic because it works against all obfuscation formats.
 The mathematical definition of entropy is:
 
 $H(X)=-\sum p(x) log_2p(x)$
+
+$p(x)$ tells us how likely 
